@@ -9,9 +9,8 @@
 
 #define vel_max 6.6667 // mm/s = 200rpm
 
-unsigned long timer_vel;
-int sampling_time=5; // mS
-int step_count=0;
+unsigned long timer_vel;int sampling_time=15; // mS
+float step_count=0;
 int step_prev_count=0;
 int sum_steps=0;
 int counter=0;
@@ -27,28 +26,36 @@ void velocity(){
         counter++;
 
         timer_vel=millis();
+
+        float dist=step_count/100; //mm
+        float time_steps = sampling_time*pow(10,-3); //s
+        float vel = dist/time_steps; //mm/s
+        Serial.print("VEL:");
+        Serial.println(vel);
+        /*Serial.print(step_count,5);
+        Serial.print("|");
+        Serial.print(dist,5);
+        Serial.print("|");
+        Serial.println(vel,5);*/
+
+        //sum_steps=0;
    }
-   float sampling_number=50;
-   if(counter>=sampling_number){
+
+   //float sampling_number=25;
+   /*if(counter>=sampling_number){
     
        float steps_prom = sum_steps/sampling_number;
        float dist_prom = steps_prom/100; //mm
        float time_prom = sampling_time*pow(10,-3); //s
        float vel = dist_prom/time_prom; //mm/s
-
         if(vel>max_v){
            max_v=vel;
        }
-
        Serial.print("VEL:");
        Serial.println(vel);
-       //Serial.println(" mm/s");
-       
-
-       counter=0;
        sum_steps=0;
 
-   }
+   }*/
 }
 
 void move(bool dir, int steps,float vel){

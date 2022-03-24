@@ -52,9 +52,14 @@ void commands(String input_commands){
         Serial.print(time);
         Serial.println(" mm/s");
         */
-       
-
         }
+
+    if(input_commands=="POS"){
+      float pos=((int32_t)encoder.getCount())/100; //mm
+      Serial.print("POS: ");
+      Serial.print(pos);
+      Serial.println(" mm");
+    }
 
 
 }
